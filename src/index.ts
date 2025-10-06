@@ -1,5 +1,5 @@
 import express from 'express'
-import dotenv from 'dotenv'
+import dotenv from 'dotenv' 
 import configuration from './config/config.js';
 import cors from "cors";
 import console = require('console');
