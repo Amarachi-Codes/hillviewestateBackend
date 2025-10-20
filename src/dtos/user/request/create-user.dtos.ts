@@ -22,6 +22,10 @@ export class SignUpDto{
     @Trim()
     lastName!: string
 
+    @IsNotEmpty()
+    @Trim()
+    residentIdNo!: string;
+
 }
 
 

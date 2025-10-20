@@ -1,9 +1,11 @@
 import express from 'express'
 import dotenv from 'dotenv' 
-import configuration from './config/config.js';
+// import configuration from './config/config.js';
 import cors from "cors";
 import console = require('console');
-import userRouter from './route/user.routes.js';
+import userRouter from './route/user.routes'
+import configuration from './config/config';
+import authRouter from './route/auth.route';
 
 dotenv.config();
 
@@ -23,6 +25,16 @@ if (isNaN(PORT)){
 }
 
 const app = express ();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors({
+         origin: "*",
+        credentials: true,
+        allowedHeaders: "*",
+        methods:"GET, HEAD,PUT,PATCH,POST,DELETE",
+    })
+);
+app.use("/api/v1/auth", authRouter);
 
 app.use("/api/v1/users", userRouter);
 

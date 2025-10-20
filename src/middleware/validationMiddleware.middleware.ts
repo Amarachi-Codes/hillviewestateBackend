@@ -28,8 +28,8 @@ export function dtovalidationMiddleware (type:any){
             })
         }
         req.body = dtoObj;
-        next();
+         next();
 
-    };
+     };
     
 }

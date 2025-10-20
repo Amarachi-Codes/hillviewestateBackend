@@ -1,12 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -14,47 +7,47 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role{
+enum Role {
   VISITOR
   RESIDENT
   ADMIN
 }
 
-enum RegistrationStatus{
+enum RegistrationStatus {
   CONFIRMED
   CANCELLED
   WHITELISTED
 }
 
-enum EntryStatus{
+enum EntryStatus {
   PENDING
   APPROVED
   CANCELLED
-
 }
 
-model User{
-  id        String @id @default (cuid())
-  email     String @unique
-  password  String
-  firstName String?
-  lastName  String?
-  phone     String?
-  ResidentIdNo String
-  Role        Role    @default(RESIDENT)
-  createdAt DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  entryPermit  EntryPermit[] @relation("entryCode")
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  password      String
+  firstName     String?
+  lastName      String?
+  phone         String?
+  residentIdNo  String
+  role          Role     @default(RESIDENT)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  entryPermits  EntryPermit[] @relation("entryCode")
 }
 
-model EntryPermit{
-  id        String @id @default (cuid())
-  residentName  String  
-  address       String
-  createdAt     DateTime  @default(now())  
-  residentPhone String
-  code          String @unique 
-  entryId       String
-  entry         User?   @relation("entryCode", fields: [entryId], references: [id]) 
-  status        EntryStatus @default(PENDING)
+model EntryPermit {
+  id             String      @id @default(cuid())
+  residentName   String
+  address        String
+  createdAt      DateTime    @default(now())
+  residentPhone  String
+  code           String      @unique
+  entryId        String
+  entry          User        @relation("entryCode", fields: [entryId], references: [id])
+  status         EntryStatus @default(PENDING)
 }
